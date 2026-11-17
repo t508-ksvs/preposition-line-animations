@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>some others still others the others 教學動畫</title>
+  <style>
+    :root {
+      --navy: #17324d;
+      --ink: #1d2733;
+      --muted: #667482;
+      --pale: #f5f8fa;
+      --coral-pale: #fde8e5;
+      --coral: #d95d55;
+      --orange-pale: #fff0d9;
+      --orange: #e79a3b;
+      --violet-pale: #eee7f7;
+      --violet: #8b67ad;
+      --blue-pale: #ddeff6;
+      --blue: #4f9db8;
+      --white: #fff;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: #eef3f6; color: var(--ink); }
+    body {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: 18px;
+      font-family: "Microsoft JhengHei", "Noto Sans TC", Arial, sans-serif;
+    }
+
+    .lesson {
+      width: min(1040px, 100%);
+      aspect-ratio: 16 / 9;
+      min-height: 560px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      background: var(--white);
+      box-shadow: 0 24px 70px rgba(23, 50, 77, .16);
+      padding: clamp(22px, 3.6vw, 46px);
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(28px, 4.2vw, 52px);
+      line-height: 1.1;
+      font-weight: 800;
+      text-align: center;
+      letter-spacing: .01em;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(15px, 2vw, 23px);
+      text-align: center;
+      min-height: 1.5em;
+    }
+
+    .stage {
+      position: relative;
+      display: grid;
+      grid-template-rows: 1fr auto auto;
+      align-items: center;
+      min-height: 315px;
+      padding: 30px 24px 22px;
+      border: 3px solid #c9d4dc;
+      border-radius: 28px;
+      background: linear-gradient(180deg, #ffffff 0%, var(--pale) 100%);
+    }
+
+    .whole-set {
+      position: relative;
+      width: min(870px, 96%);
+      margin: 0 auto;
+      padding: 30px 28px 22px;
+      border: 4px solid var(--navy);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .set-caption {
+      position: absolute;
+      left: 50%;
+      top: -18px;
+      transform: translateX(-50%);
+      padding: 5px 18px;
+      border-radius: 999px;
+      background: var(--navy);
+      color: var(--white);
+      font-size: clamp(14px, 1.8vw, 20px);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .groups {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(8px, 1.8vw, 20px);
+    }
+
+    .group {
+      position: relative;
+      min-height: 112px;
+      display: grid;
+      grid-template-columns: repeat(2, 42px);
+      place-content: center;
+      gap: 9px;
+      border: 6px solid transparent;
+      border-radius: 42% 52% 46% 55% / 54% 43% 57% 45%;
+      opacity: .92;
+      transform: scale(.95);
+      transition: border-color .4s ease, background .4s ease, opacity .4s ease, transform .55s ease;
+    }
+
+    .group::after {
+      content: "";
+      position: absolute;
+      inset: -9px -6px;
+      border: 3px solid transparent;
+      border-radius: 52% 42% 57% 44% / 43% 56% 45% 55%;
+      transform: rotate(-3deg) scale(.7);
+      opacity: 0;
+    }
+
+    .group.active { opacity: 1; transform: scale(1.07); }
+    .group.active::after { animation: circle-in .65s ease forwards; }
+    .group.done { opacity: 1; transform: scale(1); }
+    .group.dim { opacity: .3; transform: scale(.91); }
+
+    .group.some.active, .group.some.done { border-color: var(--coral); background: var(--coral-pale); }
+    .group.some.active::after { border-color: var(--coral); }
+    .group.others.active, .group.others.done { border-color: var(--orange); background: var(--orange-pale); }
+    .group.others.active::after { border-color: var(--orange); }
+    .group.still-others.active, .group.still-others.done { border-color: var(--violet); background: var(--violet-pale); }
+    .group.still-others.active::after { border-color: var(--violet); }
+    .group.the-others.active, .group.the-others.done { border-color: var(--blue); background: var(--blue-pale); }
+    .group.the-others.active::after { border-color: var(--blue); }
+
+    @keyframes circle-in {
+      0% { opacity: 0; transform: rotate(-7deg) scale(.65); }
+      75% { opacity: 1; transform: rotate(3deg) scale(1.04); }
+      100% { opacity: 1; transform: rotate(-2deg) scale(1); }
+    }
+
+    .token {
+      width: 42px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 4px solid var(--navy);
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--navy);
+      font: 800 17px/1 Arial, sans-serif;
+      transition: color .35s ease, background .35s ease, transform .35s ease;
+    }
+
+    .group.active .token { animation: pop .42s ease both; }
+    .group.active .token:nth-child(2) { animation-delay: .11s; }
+    .group.active .token:nth-child(3) { animation-delay: .22s; }
+    @keyframes pop { 50% { transform: scale(1.22); } }
+
+    .group.some.active .token, .group.some.done .token { background: var(--coral); color: var(--white); }
+    .group.others.active .token, .group.others.done .token { background: var(--orange); }
+    .group.still-others.active .token, .group.still-others.done .token { background: var(--violet); color: var(--white); }
+    .group.the-others.active .token, .group.the-others.done .token { background: var(--blue); color: var(--white); }
+
+    .label-row {
+      min-height: 64px;
+      display: grid;
+      place-items: center;
+      padding-top: 10px;
+    }
+
+    .label {
+      display: none;
+      align-items: baseline;
+      justify-content: center;
+      gap: 12px;
+      min-width: min(390px, 94%);
+      padding: 10px 24px;
+      border-radius: 999px;
+      color: var(--navy);
+      font-size: clamp(18px, 2.5vw, 29px);
+      font-weight: 800;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .label small { color: var(--muted); font-size: .65em; font-weight: 700; }
+    .label.show { display: flex; animation: label-in .45s ease forwards; }
+    .label.some { background: var(--coral-pale); }
+    .label.others { background: var(--orange-pale); }
+    .label.still-others { background: var(--violet-pale); }
+    .label.the-others { background: var(--blue-pale); }
+    @keyframes label-in { to { opacity: 1; transform: translateY(0); } }
+
+    .equation {
+      min-height: 54px;
+      padding-top: 2px;
+      text-align: center;
+      color: var(--navy);
+      font-size: clamp(15px, 2.1vw, 25px);
+      font-weight: 800;
+      line-height: 1.35;
+      opacity: 0;
+      transition: opacity .45s ease;
+    }
+    .equation.show { opacity: 1; }
+    .equation .example { display: block; color: var(--muted); font-size: .75em; margin-top: 3px; }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 24px;
+      background: var(--navy);
+      color: var(--white);
+      font: 700 18px/1 "Microsoft JhengHei", sans-serif;
+      cursor: pointer;
+    }
+    button.secondary { background: #dce5eb; color: var(--navy); }
+    button:disabled { opacity: .45; cursor: default; }
+
+    .progress {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 7px;
+      background: #e6edf1;
+    }
+    .progress > span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--coral), var(--orange), var(--violet), var(--blue));
+    }
+    .lesson.playing .progress > span { animation: progress 17s linear forwards; }
+    @keyframes progress { to { width: 100%; } }
+
+    @media (max-width: 720px) {
+      body { padding: 0; background: var(--white); }
+      .lesson { min-height: 100vh; aspect-ratio: auto; border-radius: 0; box-shadow: none; }
+      .stage { min-height: 470px; padding-inline: 12px; }
+      .whole-set { padding: 28px 14px 18px; }
+      .groups { grid-template-columns: repeat(2, 1fr); }
+      .group { min-height: 92px; grid-template-columns: repeat(3, 34px); }
+      .token { width: 34px; border-width: 3px; font-size: 14px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main id="lesson" class="lesson" aria-live="polite">
+    <h1 id="title">some 和其他複數代名詞</h1>
+    <p id="lead" class="lead">按下播放，把已知的一整群逐步分組。</p>
+
+    <section class="stage" aria-label="some、others、still others、the others 概念動畫">
+      <div class="whole-set">
+        <div class="set-caption">已知的一整群</div>
+        <div class="groups" aria-label="十二個成員分成四組">
+          <div class="group some" data-name="some"></div>
+          <div class="group others" data-name="others"></div>
+          <div class="group still-others" data-name="stillOthers"></div>
+          <div class="group the-others" data-name="theOthers"></div>
+        </div>
+      </div>
+
+      <div class="label-row">
+        <div id="someLabel" class="label some">some <small>一些</small></div>
+        <div id="othersLabel" class="label others">others <small>其他一些</small></div>
+        <div id="stillOthersLabel" class="label still-others">still others <small>還有另一些</small></div>
+        <div id="theOthersLabel" class="label the-others">the others <small>剩下的全部</small></div>
+      </div>
+
+      <div id="equation" class="equation"></div>
+    </section>
+
+    <div class="controls">
+      <button id="playButton" type="button">播放動畫</button>
+      <button id="soundButton" class="secondary" type="button" aria-pressed="true">聲音：開</button>
+    </div>
+    <div class="progress" aria-hidden="true"><span></span></div>
+  </main>
+
+  <script>
+    const lesson = document.getElementById('lesson');
+    const titleEl = document.getElementById('title');
+    const leadEl = document.getElementById('lead');
+    const equationEl = document.getElementById('equation');
+    const playButton = document.getElementById('playButton');
+    const soundButton = document.getElementById('soundButton');
+    const groups = [...document.querySelectorAll('.group')];
+    const labels = {
+      some: document.getElementById('someLabel'),
+      others: document.getElementById('othersLabel'),
+      stillOthers: document.getElementById('stillOthersLabel'),
+      theOthers: document.getElementById('theOthersLabel')
+    };
+
+    let playing = false;
+    let soundOn = true;
+    let runId = 0;
+
+    groups.forEach((group, groupIndex) => {
+      for (let item = 1; item <= 3; item += 1) {
+        const token = document.createElement('div');
+        token.className = 'token';
+        token.textContent = String(groupIndex * 3 + item);
+        group.appendChild(token);
+      }
+    });
+
+    const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    function speak(text) {
+      if (!soundOn || !('speechSynthesis' in window)) return;
+      speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.8;
+      utterance.pitch = 1;
+      const voice = speechSynthesis.getVoices().find(v => /^en(-|_)/i.test(v.lang));
+      if (voice) utterance.voice = voice;
+      speechSynthesis.speak(utterance);
+    }
+
+    function resetVisual() {
+      groups.forEach(group => { group.className = `group ${group.dataset.name.replace(/[A-Z]/g, m => `-${m.toLowerCase()}`)}`; });
+      Object.values(labels).forEach(label => label.classList.remove('show'));
+      equationEl.classList.remove('show');
+      equationEl.textContent = '';
+    }
+
+    function activate(index, labelName, spokenText) {
+      groups.forEach((group, groupIndex) => {
+        group.classList.remove('active', 'dim');
+        if (groupIndex < index) group.classList.add('done');
+        if (groupIndex === index) group.classList.add('active');
+        if (groupIndex > index) group.classList.add('dim');
+      });
+      Object.values(labels).forEach(label => label.classList.remove('show'));
+      labels[labelName].classList.add('show');
+      speak(spokenText);
+    }
+
+    async function play() {
+      if (playing) return;
+      playing = true;
+      runId += 1;
+      const thisRun = runId;
+      playButton.disabled = true;
+      playButton.textContent = '播放中';
+      lesson.classList.remove('playing');
+      void lesson.offsetWidth;
+      lesson.classList.add('playing');
+      if ('speechSynthesis' in window) speechSynthesis.cancel();
+
+      resetVisual();
+      titleEl.textContent = '把已知的一整群分成幾組';
+      leadEl.textContent = '每一個詞都代表複數的人或物。';
+      await wait(900);
+      if (thisRun !== runId) return;
+
+      activate(0, 'some', 'some');
+      leadEl.textContent = 'some：先指出其中一些。';
+      await wait(2500);
+      if (thisRun !== runId) return;
+
+      activate(1, 'others', 'others');
+      leadEl.textContent = 'others：其他一些，不一定是剩下的全部。';
+      await wait(3100);
+      if (thisRun !== runId) return;
+
+      activate(2, 'stillOthers', 'still others');
+      leadEl.textContent = 'still others：還有另外一些，再增加一組。';
+      await wait(3100);
+      if (thisRun !== runId) return;
+
+      activate(3, 'theOthers', 'the others');
+      leadEl.textContent = 'the others：已知範圍內，最後剩下的全部。';
+      await wait(3200);
+      if (thisRun !== runId) return;
+
+      groups.forEach(group => {
+        group.classList.remove('active', 'dim');
+        group.classList.add('done');
+      });
+      Object.values(labels).forEach(label => label.classList.remove('show'));
+      equationEl.innerHTML = 'some + others + still others + the others = 已知整群<span class="example">Some read; others listen; still others discuss; the others take notes.</span>';
+      equationEl.classList.add('show');
+      titleEl.textContent = '關鍵差別：有沒有 the';
+      leadEl.textContent = 'others = 其他一些；the others = 剩下的全部。';
+      speak('Others means other people or things. The others means all the remaining people or things.');
+      await wait(3900);
+
+      playButton.disabled = false;
+      playButton.textContent = '再播一次';
+      lesson.classList.remove('playing');
+      playing = false;
+    }
+
+    playButton.addEventListener('click', play);
+    soundButton.addEventListener('click', () => {
+      soundOn = !soundOn;
+      soundButton.textContent = `聲音：${soundOn ? '開' : '關'}`;
+      soundButton.setAttribute('aria-pressed', String(soundOn));
+      if (!soundOn && 'speechSynthesis' in window) speechSynthesis.cancel();
+    });
+  </script>
+</body>
+</html>
